@@ -22,6 +22,9 @@ public class Book {
     @Column(nullable = false)
     private String workId;
 
+    @Column
+    private Integer year;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author"
             , joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
