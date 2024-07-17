@@ -5,8 +5,8 @@ import hu.bca.library.services.BookService;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 @RepositoryRestController("books")
 public class BookController {
@@ -23,4 +23,11 @@ public class BookController {
     @ResponseBody Book addAuthor(@PathVariable Long bookId, @PathVariable Long authorId) {
         return this.bookService.addAuthor(bookId, authorId);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/update-all-with-year", method = RequestMethod.PATCH)
+    public Mono<Void> updateAllWithYear() {
+        return this.bookService.updateAllWithYear();
+    }
+
 }
