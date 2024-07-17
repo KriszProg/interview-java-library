@@ -24,8 +24,8 @@ public class Book {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author"
-            , joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id")
-            , inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
+            , joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+            , inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     @JsonIgnoreProperties({"books"})
     private List<Author> authors;
 
