@@ -12,6 +12,8 @@ public interface BookService {
 
     List<Book> findBooksByCountry(String country);
 
+    List<Book> findBooksByCountryAndYear(String country, Integer from);
+
     void resetAllYearToNull();
 
 }

@@ -67,6 +67,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findBooksByCountryAndYear(String country, Integer from) {
+        if (from != null) {
+            return this.bookRepository.findByAuthorsCountryAndYearGreaterThenOrEqual(country, from);
+        } else {
+            return findBooksByCountry(country);
+        }
+    }
+
+    @Override
     @Transactional
     public void resetAllYearToNull() {
         for (Book book : this.bookRepository.findAll()) {
