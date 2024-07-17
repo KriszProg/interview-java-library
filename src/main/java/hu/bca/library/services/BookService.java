@@ -10,4 +10,6 @@ public interface BookService {
 
     Mono<Void> updateAllWithYear();
 
+    void resetAllYearToNull();
+
 }

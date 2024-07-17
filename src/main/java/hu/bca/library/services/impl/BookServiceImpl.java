@@ -61,6 +61,15 @@ public class BookServiceImpl implements BookService {
                 .then();
     }
 
+    @Override
+    @Transactional
+    public void resetAllYearToNull() {
+        for (Book book : this.bookRepository.findAll()) {
+            book.setYear(null);
+            bookRepository.save(book);
+        }
+    }
+
     private Mono<Book> updateBookYear(Book book) {
         return updateBookYearRecursive(book, book.getWorkId(), 0);
     }

@@ -30,4 +30,10 @@ public class BookController {
         return this.bookService.updateAllWithYear();
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/reset-all-year", method = RequestMethod.PATCH)
+    public void resetAllYearToNull() {
+        this.bookService.resetAllYearToNull();
+    }
+
 }
