@@ -10,6 +10,8 @@ public interface BookService {
 
     Mono<Void> updateAllWithYear();
 
+    List<Book> findBooksByCountry(String country);
+
     void resetAllYearToNull();
 
 }

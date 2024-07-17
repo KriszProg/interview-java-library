@@ -62,6 +62,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findBooksByCountry(String country) {
+        return this.bookRepository.findByAuthorsCountry(country);
+    }
+
+    @Override
     @Transactional
     public void resetAllYearToNull() {
         for (Book book : this.bookRepository.findAll()) {

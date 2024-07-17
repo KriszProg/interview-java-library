@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RepositoryRestController("books")
 public class BookController {
@@ -28,6 +32,24 @@ public class BookController {
     @RequestMapping(value = "/update-all-with-year", method = RequestMethod.PATCH)
     public Mono<Void> updateAllWithYear() {
         return this.bookService.updateAllWithYear();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/query/functional/{country}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Book> queryFunctionalDriven(@PathVariable String country,
+                                            @RequestParam(name = "from", required = false) Integer from) {
+        List<Book> bookListByCountry = this.bookService.findBooksByCountry(country);
+
+        if (from != null) {
+            bookListByCountry = bookListByCountry.stream()
+                    .filter(book -> book.getYear() != null && book.getYear() >= from)
+                    .collect(Collectors.toList());
+        }
+
+        bookListByCountry.sort(Comparator.comparing(Book::getYear, Comparator.nullsLast(Comparator.naturalOrder())));
+
+        return bookListByCountry;
     }
 
     @ResponseStatus(HttpStatus.OK)
