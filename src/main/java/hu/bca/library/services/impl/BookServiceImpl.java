@@ -98,19 +98,18 @@ public class BookServiceImpl implements BookService {
                     try {
                         JsonNode root = objectMapper.readTree(jsonResponse);
                         String jsonKeyFirstPublishDate = properties.getJsonKeyFirstPublishDate();
+                        String jsonKeyLocation = properties.getJsonKeyLocation();
+
                         if (root.has(jsonKeyFirstPublishDate)) {
                             String firstPublishDate = root.get(jsonKeyFirstPublishDate).asText();
                             Integer year = extractYearFromFirstPublishDate(firstPublishDate);
                             book.setYear(year);
                             this.bookRepository.save(book);
                             return Mono.empty();
-                        } else {
-                            String jsonKeyLocation = properties.getJsonKeyLocation();
-                            if (root.has(jsonKeyLocation)) {
+                        } else if (root.has(jsonKeyLocation)) {
                                 String location = root.get(jsonKeyLocation).asText();
                                 String newWorkId = extractNewWorkIdFromLocation(location);
                                 return updateBookYearRecursive(book, newWorkId, depth + 1);
-                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
