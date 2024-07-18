@@ -84,13 +84,13 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private Mono<Book> updateBookYear(Book book) {
+    private Mono<Void> updateBookYear(Book book) {
         return updateBookYearRecursive(book, book.getWorkId(), 0);
     }
 
-    private Mono<Book> updateBookYearRecursive(Book book, String workId, int depth) {
+    private Mono<Void> updateBookYearRecursive(Book book, String workId, int depth) {
         if (depth >= properties.getRecursiveDepthLimit()) {
-            return Mono.just(book);
+            return Mono.empty();
         }
 
         return this.openLibraryService.fetchBookDetailsByWorkId(workId)
@@ -103,7 +103,7 @@ public class BookServiceImpl implements BookService {
                             Integer year = extractYearFromFirstPublishDate(firstPublishDate);
                             book.setYear(year);
                             this.bookRepository.save(book);
-                            return Mono.just(book);
+                            return Mono.empty();
                         } else {
                             String jsonKeyLocation = properties.getJsonKeyLocation();
                             if (root.has(jsonKeyLocation)) {
@@ -115,7 +115,7 @@ public class BookServiceImpl implements BookService {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    return Mono.just(book);
+                    return Mono.empty();
                 });
     }
 
