@@ -66,10 +66,32 @@ public class BookServiceImpl implements BookService {
         return this.bookRepository.findByAuthorsCountry(country);
     }
 
+    /**
+     * INFO a code-review-hoz:
+     * [1] A 'query' feature 2 különböző módon lett implementálva:
+     * BookController.queryFunctionalDriven()
+     * BookController.queryDbDriven()
+     *
+     * [2] Az interjún feladat volt, hogy egészítsem ki a 'query' feature-t egy opcionális 'to' paramétterel.
+     * A kiegészítés a queryDbDriven() változatban készült.
+     * Az interjút úgy hagytuk abba, hogy a lekérdezés megfelelően működött ha:
+     * (A) csak a 'from' paraméter volt megadva
+     * (B) mindkét paraméter ('from', 'to') meg volt ada
+     * De nem működött megfelelően ha:
+     * (C) csak a 'to' paraméter volt megadva.
+     *
+     * [3] Az interjún azt feltételeztem, hogy a BookRepository-ban nem megfelelő a módosított query,
+     * mert talán a Hibernate nem tudja megfeleően kiértékelni a :from IS NULL -t illetve a :to IS NULL -t.
+     *
+     * [4] Az interjút követően nyugodt körülmények között tesztelve hamar kiderült, hogy a query rendben volt,
+     * csak a 93-as sorból kimaradt az új 'to' paraméter jelenlétének vizsgálata. A 93-as sort erre kellett
+     * volna módosítani: if (from != null || to != null) {
+     *
+     */
     @Override
-    public List<Book> findBooksByCountryAndYear(String country, Integer from) {
+    public List<Book> findBooksByCountryAndYear(String country, Integer from, Integer to) {
         if (from != null) {
-            return this.bookRepository.findByAuthorsCountryAndYearGreaterThenOrEqual(country, from);
+            return this.bookRepository.findByAuthorsCountryAndYearBetween(country, from, to);
         } else {
             return findBooksByCountry(country);
         }

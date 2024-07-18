@@ -18,16 +18,18 @@ public interface BookRepository extends CrudRepository<Book, Long> {
             """)
     List<Book> findByAuthorsCountry(@Param("country") String country);
 
-    @Query("""
+    @Query(value = """
         SELECT b
         FROM Book b
         JOIN b.authors a
         WHERE LOWER(a.country) = LOWER(:country)
         AND b.year IS NOT NULL
-        AND b.year >= :from
+        AND (:from IS NULL OR b.year >= :from)
+        AND (:to IS NULL OR b.year <= :to)
         ORDER BY b.year ASC
         """)
-    List<Book> findByAuthorsCountryAndYearGreaterThenOrEqual(@Param("country") String country,
-                                                             @Param("from") Integer from);
+    List<Book> findByAuthorsCountryAndYearBetween(@Param("country") String country,
+                                                  @Param("from") Integer from,
+                                                  @Param("to") Integer to);
 
 }

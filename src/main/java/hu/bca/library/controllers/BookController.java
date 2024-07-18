@@ -56,8 +56,9 @@ public class BookController {
     @RequestMapping(value = "/query/db/{country}", method = RequestMethod.GET)
     @ResponseBody
     public List<Book> queryDbDriven(@PathVariable String country,
-                                    @RequestParam(name = "from", required = false) Integer from) {
-        return bookService.findBooksByCountryAndYear(country, from);
+                                    @RequestParam(name = "from", required = false) Integer from,
+                                    @RequestParam(name = "to", required = false) Integer to) {
+        return bookService.findBooksByCountryAndYear(country, from, to);
     }
 
 
