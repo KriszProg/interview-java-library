@@ -1,11 +1,164 @@
 {
 	"info": {
-		"_postman_id": "500317bd-c436-452d-82e4-1ba84ce43cd5",
+		"_postman_id": "73556df9-dac3-46e8-8784-54cb0dd32d4d",
 		"name": "library",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "3341161"
+		"_exporter_id": "11117306"
 	},
 	"item": [
+		{
+			"name": "KriszHelper",
+			"item": [
+				{
+					"name": "update-all-with-year",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/books/update-all-with-year",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books",
+								"update-all-with-year"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-all-year",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/books/reset-all-year",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books",
+								"reset-all-year"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update book (year to null)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/books/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryFunctionalDriven",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/books/query/functional/:country?from=1984",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books",
+								"query",
+								"functional",
+								":country"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "1984"
+								}
+							],
+							"variable": [
+								{
+									"key": "country",
+									"value": "UK"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryDbDriven",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/books/query/db/:country?to=2000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books",
+								"query",
+								"db",
+								":country"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "1984",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2000"
+								}
+							],
+							"variable": [
+								{
+									"key": "country",
+									"value": "usa"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "OpenLibrary",
 			"item": [
